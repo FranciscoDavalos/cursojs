@@ -1,52 +1,79 @@
+function producto(nombre, precio) {
+  this.nombre = nombre;
+  this.precio = precio;
+  this.disponible = true;
+}
+
+
+const camiseta = new producto ("camiseta", 11000);
+const short = new producto ("short", 8000);
+const medias = new producto ("medias", 3500);
+const buzo = new producto ("buzo", 11000);
+
+let productos = [camiseta, short, medias, buzo,];
+let carrito = [];
+let precio = 0;
+let listaNombres = [];
+
+function calcularCompra() {
+  for (let productos of carrito) {
+    precio += productos.precio;
+  }
+  return precio;
+}
+
+function nombreDeLaCompra(){
+  for (let productos of carrito) {
+    listaNombres += `\n` + productos.nombre;
+  }
+  return listaNombres + ".";
+}
+
 function saludar() {
   alert ( `Bienvenido a la tienda ${nombre}!`)
 }
 
 function comprarProducto() {  
-  producto = prompt("Elegi un producto \n 1: Camiseta \n 2: Short \n 3: Medias \n 4: Buzo")
-  if (producto === "1") {
-    alert("Seleccionaste una camiseta")
+  numero = prompt(`Elegi un producto 
+  1: ${productos[0].nombre} 
+  2: ${productos[1].nombre} 
+  3: ${productos[2].nombre}  
+  4: ${productos[3].nombre} `)
+  if (numero === "1") {
+    alert(`Seleccionaste una ${camiseta.nombre}`)
+    carrito.push(camiseta)
   }
-  else if (producto === "2") {
-    alert ("Seleccionaste un short")
+  else if (numero === "2") {
+    alert(`Seleccionaste un ${short.nombre}`)
+    carrito.push(short)
   }
-  else if (producto === "3"){
-    alert ("Seleccionaste unas medias")
+  else if (productos === "3"){
+    alert(`Seleccionaste unas ${medias.nombre}`)
+    carrito.push(medias)
   }
-  else if (producto === "4") {
-    alert ("Seleccionaste un buzo")
+  else if (numero === "4") {
+    alert(`Seleccionaste un ${buzo.nombre}`)
+    carrito.push(buzo)
   }
   else {
     alert ("error, por favor ingrese una de las opciones");
     comprarProducto()
   }
   opcion = prompt (`Ingrese una opcion:
-  1: Cambiar de producto
+  1: Sumar producto
   2: Finalizar Compra
   3: Salir`)
 }
 
 function finalizarCompra() {  
-  if (producto === "1") {
-    alert("Usted elige la camiseta por un costo final de $" + camiseta*1.21 )
-  }
-  else if (producto === "2"){
-    alert ("Usted elige el short por un costo final de $" + short*1.21)
-  }
-  else if (producto === "3"){
-    alert ("Usted elige las medias por un costo final de $" + medias*1.21)
-  }
-  else if (producto === "4"){
-    alert ("Usted elige el buzo por un costo final de $" + buzo*1.21)
-  }
+
+  alert(`Su compra incluye: ${nombreDeLaCompra()} \nAl precio de: $${calcularCompra()}`)
 }
 
-let producto;
-let camiseta = 11000;
-let short =  8800;
-let medias = 3500;
-let buzo = 11000;
-let nombre = prompt("ingrese su nombre")
+
+let numero;
+
+let nombre = prompt("ingrese su nombre").toLowerCase()
 saludar()
 let opcion = prompt(`Ingrese una opcion:
 1: Comprar Producto
@@ -61,4 +88,5 @@ while ( opcion !== "3") {
     finalizarCompra()
     opcion = "3"
   }
-}
+} 
+
