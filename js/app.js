@@ -10,30 +10,29 @@ const short = new producto ("short", 8000);
 const medias = new producto ("medias", 3500);
 const buzo = new producto ("buzo", 11000);
 
-let productos = [camiseta, short, medias, buzo,];
+let productos = [
+  {nombre:"camiseta", precio:11000},
+  {nombre:"short",precio:8000},
+  {nombre:"medias",precio:3500},
+  {nombre:"buzo",precio:11000},
+];
 let carrito = [];
-let precio = 0;
+let total = 0;
 let listaNombres = [];
 
-function calcularCompra() {
-  for (let productos of carrito) {
-    precio += productos.precio;
-  }
-  return precio;
+let calcularCompra = () => {
+  carrito.forEach((producto) => (total += producto.precio))
+  return total
 }
 
-function nombreDeLaCompra(){
-  for (let productos of carrito) {
-    listaNombres += `\n` + productos.nombre;
-  }
-  return listaNombres + ".";
+let nombreDeLaCompra = () => {
+  carrito.forEach((producto) => (listaNombres += `\n` + producto.nombre))
+  return listaNombres + "."
 }
 
-function saludar() {
-  alert ( `Bienvenido a la tienda ${nombre}!`)
-}
+let saludar = () => alert ( `Bienvenido a la tienda ${nombre}!`)
 
-function comprarProducto() {  
+let comprarProducto = () => {  
   numero = prompt(`Elegi un producto 
   1: ${productos[0].nombre} 
   2: ${productos[1].nombre} 
@@ -47,7 +46,7 @@ function comprarProducto() {
     alert(`Seleccionaste un ${short.nombre}`)
     carrito.push(short)
   }
-  else if (productos === "3"){
+  else if (numero === "3"){
     alert(`Seleccionaste unas ${medias.nombre}`)
     carrito.push(medias)
   }
@@ -65,8 +64,7 @@ function comprarProducto() {
   3: Salir`)
 }
 
-function finalizarCompra() {  
-
+let finalizarCompra = () => {  
   alert(`Su compra incluye: ${nombreDeLaCompra()} \nAl precio de: $${calcularCompra()}`)
 }
 
@@ -84,7 +82,7 @@ while ( opcion !== "3") {
   if (opcion === "1") {
     comprarProducto()
 }
-  if (opcion === "2"){
+  else{
     finalizarCompra()
     opcion = "3"
   }
