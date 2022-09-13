@@ -1,21 +1,21 @@
-function producto(nombre, precio) {
+function producto(id, nombre, precio, imagen) {
+  this.id = id;
   this.nombre = nombre;
   this.precio = precio;
+  this.imagen = imagen;
   this.disponible = true;
 }
 
+const camiseta = new producto ("1","Camiseta", 16999,"./imagenes/camiseta1.jpg");
+const camisetaSuplente = new producto ("2","Camiseta suplente", 14999,"./imagenes/camiseta2.jpg");
+const camisetaAlternativa = new producto ("3","Camiseta Alternativa", 14999,"./imagenes/camiseta3.jpg");
+const short = new producto ("4","Short", 8000,"./imagenes/short1.jpg");
+const medias = new producto ("5","Medias", 3500,"./imagenes/medias1.jpg");
+const buzo = new producto ("6","Buzo", 10999,"./imagenes/buzo1.jpg");
+const buzoRustico = new producto ("7","Buzo rustico", 10999,"./imagenes/buzo2.jpg");
+const pantalon = new producto ("8","Pantalon", 12999, "./imagenes/pantalon1.jpg")
 
-const camiseta = new producto ("camiseta", 11000);
-const short = new producto ("short", 8000);
-const medias = new producto ("medias", 3500);
-const buzo = new producto ("buzo", 11000);
-
-let productos = [
-  {nombre:"camiseta", precio:11000},
-  {nombre:"short",precio:8000},
-  {nombre:"medias",precio:3500},
-  {nombre:"buzo",precio:11000},
-];
+let productos = [camiseta,camisetaAlternativa,camisetaSuplente,short,medias,buzo,buzoRustico,pantalon];
 let carrito = [];
 let total = 0;
 let listaNombres = [];
@@ -30,61 +30,47 @@ let nombreDeLaCompra = () => {
   return listaNombres + "."
 }
 
-let saludar = () => alert ( `Bienvenido a la tienda ${nombre}!`)
-
-let comprarProducto = () => {  
-  numero = prompt(`Elegi un producto 
-  1: ${productos[0].nombre} 
-  2: ${productos[1].nombre} 
-  3: ${productos[2].nombre}  
-  4: ${productos[3].nombre} `)
-  if (numero === "1") {
-    alert(`Seleccionaste una ${camiseta.nombre}`)
-    carrito.push(camiseta)
-  }
-  else if (numero === "2") {
-    alert(`Seleccionaste un ${short.nombre}`)
-    carrito.push(short)
-  }
-  else if (numero === "3"){
-    alert(`Seleccionaste unas ${medias.nombre}`)
-    carrito.push(medias)
-  }
-  else if (numero === "4") {
-    alert(`Seleccionaste un ${buzo.nombre}`)
-    carrito.push(buzo)
-  }
-  else {
-    alert ("error, por favor ingrese una de las opciones");
-    comprarProducto()
-  }
-  opcion = prompt (`Ingrese una opcion:
-  1: Sumar producto
-  2: Finalizar Compra
-  3: Salir`)
-}
-
 let finalizarCompra = () => {  
   alert(`Su compra incluye: ${nombreDeLaCompra()} \nAl precio de: $${calcularCompra()}`)
 }
 
+const listaProductos = () => {
+  let contenedor = document.getElementById("container");
+  productos.forEach((producto,indice)=>{
+    let card = document.createElement("div");
+    card.classList.add("card", "col-sm-12", "col-lg-3")
+    card.innerHTML =`<div class="card" style="width: 18rem;">
+    <img src="${producto.imagen}" class="card-img-top" alt="..."style="height: 286px;">
+    <div class="card-body">
+      <h5 class="card-title">${producto.nombre}</h5>
+      <p class="card-text">$${producto.precio}</p>
+      <a href="#" class="btn btn-primary" onClick="agregarAlCarrito(${indice})" >Comprar</a>
+    </div>
+  </div>`;
+  contenedor.appendChild(card);
+  });
 
-let numero;
-
-let nombre = prompt("ingrese su nombre").toLowerCase()
-saludar()
-let opcion = prompt(`Ingrese una opcion:
-1: Comprar Producto
-2: Finalizar Compra
-3: Salir`);
-
-while ( opcion !== "3") {
-  if (opcion === "1") {
-    comprarProducto()
 }
-  else{
-    finalizarCompra()
-    opcion = "3"
-  }
-} 
 
+const agregarAlCarrito = (indice) => {
+  let busquedaIndice = carrito.findIndex((elemento)=>{
+    return elemento.id === producto[indice].id
+  });
+  if (busquedaIndice === -1){
+    const productoAgregar = productos[indice]
+    productoAgregar.cantidad = 1;
+    carrito.push(productoAgregar)
+    dibujarCarrito()
+  }
+  else{
+    carrito[busquedaIndice].cantidad += 1;
+    dibujarCarrito()
+  }
+};
+
+const dibujarCarrito = () => {
+
+}
+
+listaProductos();
+console.log(carrito)
