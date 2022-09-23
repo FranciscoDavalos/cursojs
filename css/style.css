@@ -1,0 +1,27 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    z-index: 1;
+    position: sticky;
+    top: 0%;
+}
+
+.boton-carrito {
+    border: none;
+}
+
+.cart-img {
+    width: 80px;
+    height: 60px;
+}
+
+.botonEliminar {
+    font-size: 10px;
+    height: 30px;
+    text-align: center;
+    align-items: center;
+}

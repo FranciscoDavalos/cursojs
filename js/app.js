@@ -24,6 +24,11 @@ let carrito = [];
 let total = 0;
 let listaNombres = [];
 
+//funcion para calcular el total
+let calcularCompra = () => {
+  carrito.forEach((producto) => (total += producto.precio * producto.cantidad))
+  return total }
+
 //funcion que crea las cards que se van a mostrar en el HTML y agrego un onClick
 const listaProductos = () => {
   let contenedor = document.getElementById("container");
@@ -58,9 +63,37 @@ const agregarAlCarrito = (indice) => {
     dibujarCarrito()
   }
 };
+let dibujocarrito = document.getElementById("carrito")
+
+
 
 const dibujarCarrito = () => {
-
+  dibujocarrito.innerHTML="";
+  if (carrito.length > 0 ) {
+    carrito.forEach((producto)=>{
+      let productocarrito = document.createElement("div")
+      productocarrito.classList.add("container-fluid", "row")
+      productocarrito.innerHTML=`<img src="${producto.imagen}" class="cart-img">
+      <h5 class="fs-5 col-2">${producto.nombre}</h2>
+      <p class="col-2">Precio: $${producto.precio}</p>
+      <p class="col-2">Cantidad: ${producto.cantidad}</p>
+      <button type="button" class="btn btn-danger col-2 botonEliminar" onClick="eliminarDelCarrito(${producto.id})"><i class="fas fa-trash-alt"></i></button>`
+      dibujocarrito.appendChild(productocarrito)
+      })
+  }
 }
+
+
+
+//elimina los productos
+let eliminarDelCarrito = (productoid) => {
+  let item = carrito.find((producto) => producto.id === productoid)
+  let indice = carrito.indexOf(item)
+  carrito.splice(indice, 1)
+  dibujarCarrito()
+}
+
 listaProductos();
-console.log(carrito)
+console.log(carrito) 
+calcularCompra()
+dibujarTotal()
